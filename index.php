@@ -1,3 +1,8 @@
+<?php 
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,7 +34,7 @@
 <span class="icon-bar"></span>
 <span class="icon-bar"></span>
 </button>
-<a class="navbar-brand" href="index.html"><img width="153" height="20" src="images/logo-sa.png" alt="scam-alert.io"></a>
+<a class="navbar-brand" href="index.php"><img width="153" height="20" src="images/logo-sa.png" alt="scam-alert.io"></a>
 </div>
 <div class="navbar-collapse collapse">
 <ul class="nav navbar-nav">
@@ -63,7 +68,7 @@ check to help protect yourself and others against scams.
 <i class="icon-ok" aria-hidden="true"></i>
 <span>CHECK</span>
 </a>
-<a href="https://twitter.com/whale_alert" target="_blank" class="btn btn-md btn-primary-filled btn-pill page-scroll">
+<a href="#" target="_blank" class="btn btn-md btn-primary-filled btn-pill page-scroll">
 <i class="icon-twitter" aria-hidden="true"></i>
 <span>FOLLOW</span>
 </a>
@@ -71,7 +76,7 @@ check to help protect yourself and others against scams.
 </div>
 <div class="col-xs-12 col-md-6 header-content-feature col-xs-offset-0 col-sm-offset-0">
 <div id="register-form">
-<h3 class="log-title">File <span class="text-primary">SCAM</span> Report</h3>
+<h3 class="log-title">File <span class="text-danger">SCAM</span> Report</h3>
 <p class="log-text">Help us fight crypto crime by filling out the form below!</p>
 <form method="POST" autocomplete="off">
 <div class="form-group" style="margin-bottom: 30px;">
@@ -131,9 +136,9 @@ check to help protect yourself and others against scams.
 </div>
 </div>
 <div class="pull-right">
-<button type="submit" id="report-submit" class="btn btn-md btn-log btn-pill">
+<button type="submit" id="report-submit" class="btn">
 <i class="icon-right-open" aria-hidden="true"></i>
-<span>SEND REPORT</span>
+<span class="text-light">SEND REPORT</span>
 </button>
 <div id="report-recaptcha"></div>
 <div id="msgSubmit" class="h3 text-center hidden"></div>
@@ -142,7 +147,7 @@ check to help protect yourself and others against scams.
 </div>
 </form>
 </div>
-<div class="recaptcha-branding pull-left">Scam Alert is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank">Terms</a> apply.
+<div class="recaptcha-branding pull-left">Scam Alert is protected by reCAPTCHA and the Google <a href="#" target="_blank">Privacy Policy</a> and <a href="#" target="_blank">Terms</a> apply.
 </div>
 </div>
 </div>
@@ -153,7 +158,7 @@ check to help protect yourself and others against scams.
 <section id="scamcheck">
 <div class="container">
 <div class="page-header text-center">
-<h2>Address Check</h2>
+<h2 class="text-primay">Address Check</h2>
 </div>
 <div class="row">
 <div class="col-xs-12 text-center">
@@ -176,7 +181,7 @@ has been reported.
 <form id="search-scam-form" class="form-group form-search form-horizontal text-center">
 <div id="search-scam">
 <input type="text" class="no-border search-query" placeholder="1PRugWeVRR7aAuSJJVit2mp2gb4HqCCbMn" id="search-address" maxlength="64">
-<span><i class="icon-search"></i></span>
+<span class="search-icon" ><i class="icon-search"></i></span>
 </div>
 </form>
 <div class="text-center">
@@ -327,7 +332,7 @@ USD based on prices at the moment of transaction.
 <div class="col-md-4 col-sm-6 col-xs-10 margin_bottom30 col-xs-offset-1 col-sm-offset-0">
 <img class="img-responsive center-block" src="images/sextortion.png" alt="Sextortion">
 <div class="blog-content text-justify" style="padding-top:20px;">
-<h3 class="text-center">Sextortion</h3>
+<h3 class="text-center" style="color:#0275d8;">Sextortion</h3>
 <p class="crime-type">FELONY</p>
 <p>A popular blackmail scam in which victims receive an e-mail stating
 that their webcam was hacked and used to record them watching
@@ -339,7 +344,7 @@ video being released. Scammers risk a maximum prison sentence of <strong>15 year
 <div class="col-md-4 col-sm-6 col-xs-10 margin_bottom30 col-xs-offset-1  col-sm-offset-0">
 <img class="img-responsive center-block" src="images/ransomware.png" alt="Ransomware">
 <div class="blog-content text-justify" style="padding-top:20px;">
-<h3 class="text-center">Ransomware</h3>
+<h3 class="text-center" style="color:#0275d8;">Ransomware</h3>
 <p class="crime-type">FELONY</p>
 <p>Through the use of malware, hackers have managed to lock and encrypt the victim's computer and demand
 a hefty ransom.
@@ -353,7 +358,7 @@ years</strong> in prison and a <strong>$10,000</strong> fine per attack.
 <div class="col-md-4 col-sm-6 col-xs-10 margin_bottom30 col-xs-offset-1 col-sm-offset-0">
 <img class="img-responsive center-block" src="images/ponzi.png" alt="Ponzi Scheme">
 <div class="blog-content text-justify" style="padding-top:20px;">
-<h3 class="text-center">Ponzi Schemes</h3>
+<h3 class="text-center" style="color:#0275d8;">Ponzi Schemes</h3>
 <p class="crime-type">FELONY</p>
 <p>Scammers promise extremely high profits, but are secretive about their
 strategies. Victims are encouraged to find new investors to keep the illusion alive as long as
@@ -366,7 +371,7 @@ of <strong>20 years to life</strong> in prison and a fine of up to <strong>$5 mi
 <div class="col-md-4 col-sm-6 col-xs-10 margin_bottom30 col-xs-offset-1 col-sm-offset-0">
 <img class="img-responsive center-block" src="images/fraud.png" alt="Fraud">
 <div class="blog-content  text-justify" style="padding-top:20px;">
-<h3 class="text-center">Giveaway</h3>
+<h3 class="text-center" style="color:#0275d8;">Giveaway</h3>
 <p class="crime-type">FELONY</p>
 <p>Scammers often pretend to be famous people and promise their victims free money if they send them
 some first, but of course nothing is ever sent back. Online fraud carries a maximum sentence of
@@ -378,7 +383,7 @@ first time offenders.</p>
 <div class="col-md-4 col-sm-6 col-xs-10 margin_bottom30 col-xs-offset-1  col-sm-offset-0">
 <img class="img-responsive center-block" src="images/web.png" alt="Dark Web">
 <div class="blog-content text-justify" style="padding-top:20px;">
-<h3 class="text-center">Dark Web</h3>
+<h3 class="text-center" style="color:#0275d8;">Dark Web</h3>
 <p class="crime-type">FELONY</p>
 <p>A hidden part of the internet only accessible with special software where anything can be bought and
 where criminals launder their stolen cryptocurrencies. For his role in the popular Silk Road market,
@@ -390,7 +395,7 @@ in prison</strong> without possibility of parole.
 <div class="col-md-4 col-sm-6 col-xs-10 margin_bottom30 col-xs-offset-1 col-sm-offset-0">
 <img class="img-responsive center-block" src="images/theft.png" alt="Theft">
 <div class="blog-content text-justify" style="padding-top:20px;">
-<h3 class="text-center">Theft</h3>
+<h3 class="text-center" style="color:#0275d8;">Theft</h3>
 <p class="crime-type">FELONY</p>
 <p>Hackers and scammers have stolen billions of dollars in cryptocurrency over the years. Not even the
 largest exchanges are safe from these skilled and sometimes familiar criminals. In 2019, hacker Joel
@@ -618,13 +623,13 @@ third parties or law enforcement if required.</p>
 </div>
 </div>
 <div class="text-center" style="padding-top:20px">
-<a href="cdn-cgi/l/email-protection.html#f08393919d919c958284b08798919c95dd919c958284de999f"><i class="lnr lnr-envelope"></i> <span><span class="__cf_email__" data-cfemail="295a4a484448454c5b5d695e4148454c0448454c5b5d074046">[email&#160;protected]</span></span></a>
+<a href="#"><i class="lnr lnr-envelope"></i> <span><span class="__cf_email__" data-cfemail="295a4a484448454c5b5d695e4148454c0448454c5b5d074046">[email&#160;protected]</span></span></a>
 <span> | </span>
-<a href="https://twitter.com/whale_alert" target="_blank"> <i class="icon-twitter"></i><span> @whale_alert</span></a>
+<a href="#" target="_blank"> <i class="icon-twitter"></i><span> @whale_alert</span></a>
 </div>
 </div>
 <div class="container">
-<p class="footer-info text-center">© 2021 <a href="https://whale-alert.io/" target="_blank"><span><strong>Whale Alert</strong></span></a>
+<p class="footer-info text-center">© 2021 <a href="#" target="_blank"><span><strong>Whale Alert</strong></span></a>
 </p>
 </div>
 </footer>
@@ -672,27 +677,27 @@ third parties or law enforcement if required.</p>
 
         let searchTimeout;
         
-        $("body").on('keyup', '#search-address', function (e) {
-            const code = (e.keyCode || e.which);
+        // $("body").on('keyup', '#search-address', function (e) {
+        //     const code = (e.keyCode || e.which);
 
-            if ((code >= 9 && code <= 45 && code !== 32) || (code >= 91 && code <= 93) || (code >= 112 && code <= 145)) {
-                return;
-            }
+        //     if ((code >= 9 && code <= 45 && code !== 32) || (code >= 91 && code <= 93) || (code >= 112 && code <= 145)) {
+        //         return;
+        //     }
 
-            window.clearTimeout(searchTimeout);
-            hideSearchResult();
-            searchTimeout = window.setTimeout(function () {
-                search();
-            }, 2000);
-        });
+        //     window.clearTimeout(searchTimeout);
+        //     hideSearchResult();
+        //     searchTimeout = window.setTimeout(function () {
+        //         search();
+        //     }, 2000);
+        // });
 
         
-        $('#search-address').on('paste', function () {
-            window.clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(function () {
-                search();
-            }, 100);
-        });
+        // $('#search-address').on('paste', function () {
+        //     window.clearTimeout(searchTimeout);
+        //     searchTimeout = setTimeout(function () {
+        //         search();
+        //     }, 100);
+        // });
 
         
         $("#search-scam-form").submit(function (event) {
@@ -765,21 +770,30 @@ third parties or law enforcement if required.</p>
         return isValid;
     }
 
+    $(".search-icon").click(e=>{
+        console.log('click');
+        // search()
+        makeApiCall()
+    })
+
     
     function search() {
         const query = $("#search-address").val();
+        console.log(query);
 
         if (query.length < 4) return
-
+        var apiKey = "KpEf8AfgCDv5Tylzjr0pMInnKipPQ6pa";
+        let url = `https://api.whale-alert.io/v1/transaction/ethereum/0x0015286d8642f0e0553b7fefa1c168787ae71173cbf82ec2f2a1b2e0ffee72b2?api_key=${apiKey}`
         
-        grecaptcha.execute('6LeZ-s4ZAAAAABQepGLGD9euwZsM8mDagU0xePWq', {action: 'search'}).then(function (token) {
+        
             $.ajax({
                 type: "GET",
-                dataType: "json",
-                data: {q: query, token: token},
-                url: '/search',
+                dataType: "jsonp",
+                crossDomain: true,
+                url: url,
             }).done(function (data) {
                 $("#search-results").removeClass();
+                console.log(data);
 
                 if (data.error) {
                     showSearchResult("Error", data.error)
@@ -817,7 +831,17 @@ third parties or law enforcement if required.</p>
             }).fail(function () {
                 showSearchResult("", "Error", "Error submitting your query. Please try again.")
             });
-        });
+    }
+
+    function makeApiCall() {
+        $.ajax({
+            url:"api.php",
+            method: "post",
+            data:"action="+"CallAPI",
+            success: (res) =>{
+                console.log(res);
+            }
+        })
     }
 
     
