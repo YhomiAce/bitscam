@@ -770,17 +770,18 @@ third parties or law enforcement if required.</p>
         return isValid;
     }
 
+    // Search event functionality
     $(".search-icon").click(e=>{
-        console.log('click');
+        const query = $("#search-address").val();
+        if (query.length < 4) return
         // search()
         makeApiCall()
     })
 
     
     function search() {
+        
         const query = $("#search-address").val();
-        console.log(query);
-
         if (query.length < 4) return
         var apiKey = "KpEf8AfgCDv5Tylzjr0pMInnKipPQ6pa";
         let url = `https://api.whale-alert.io/v1/transaction/ethereum/0x0015286d8642f0e0553b7fefa1c168787ae71173cbf82ec2f2a1b2e0ffee72b2?api_key=${apiKey}`
@@ -834,13 +835,49 @@ third parties or law enforcement if required.</p>
     }
 
     function makeApiCall() {
+        const query = $("#search-address").val();
+        
         $.ajax({
             url:"api.php",
             method: "post",
-            data:"action="+"CallAPI",
+            data:{action: "CallAPI",q:query},
             success: (res) =>{
                 console.log(res);
+                if (res.error) {
+                    showSearchResult("Error", res.error)
+                } else if (res.level) {
+                    let warningText = ""
+                    let warningClass = ""
+
+                    switch (res.level) {
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 4:
+                            warningClass = "search-results-trusted"
+                            warningText = "<i class=\"icon-ok\" aria-hidden=\"true\"></i> "
+                            break;
+                        case 5:
+                        case 6:
+                            warningClass = "search-results-suspected"
+                            warningText = "<i class=\"icon-attention\" aria-hidden=\"true\"></i> "
+                            break;
+                        case 7:
+                        case 8:
+                            warningClass = "search-results-confirmed"
+                            warningText = "<i class=\"icon-attention\" aria-hidden=\"true\"></i> "
+                            break;
+                    }
+                    showSearchResult(warningClass, warningText + res.title, res.text, res.info, res.sources)
+                } else if (res.title && res.text) {
+                    
+                    showSearchResult("search-results-trusted", res.title, res.text)
+                } else {
+                    
+                    showSearchResult("", "Error", "Error submitting your query. Please try again.")
+                }
             }
+            
         })
     }
 
