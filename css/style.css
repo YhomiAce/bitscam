@@ -9,6 +9,14 @@
 .search-icon{
     cursor: pointer;
 }
+.space-1{
+  margin: 20px;
+  color: #d2373b;
+  display: block;
+}
+.give-space{
+  margin-top: 40px;
+}
 .text-primary {
     color: var(--primary-color);
   }

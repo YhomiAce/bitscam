@@ -11,7 +11,7 @@
             echo $e;
         }else{
             $decoded = json_decode($res,true);
-            echo json_encode($res);
+            print_r($res);
         }
         curl_close($curl);
     }
@@ -21,7 +21,7 @@
         fetchTransactions($query);
 
     }
-    // fetchTransactions("6274840b6450ae79d528472b9ecc78862e2bdc74c6130f39757ccdcabbd8da82")
+    fetchTransactions("6274840b6450ae79d528472b9ecc78862e2bdc74c6130f39757ccdcabbd8da82")
     
     
 ?>

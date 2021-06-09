@@ -78,7 +78,7 @@ check to help protect yourself and others against scams.
 <div id="register-form">
 <h3 class="log-title">File <span class="text-danger">SCAM</span> Report</h3>
 <p class="log-text">Help us fight crypto crime by filling out the form below!</p>
-<form method="POST" autocomplete="off">
+<form method="POST" autocomplete="off" id="scamReportForm">
 <div class="form-group" style="margin-bottom: 30px;">
 <label for="scam-type">Scam</label>
 <span class="help-block">Please select a scam type</span>
@@ -92,7 +92,7 @@ check to help protect yourself and others against scams.
 <option value="giveaway">Fake Giveaway (Doubler)</option>
 <option value="ponzi">Ponzi Scheme</option>
 <option value="investment">Fake Investment / Fake Miner</option>
-<option value="ico">Fake ICO (Token Sale)</option>
+<option value="fake ico">Fake ICO (Token Sale)</option>
 <option value="charity">Fake Charity</option>
 <option value="exchange">Fake Exchange</option>
  </optgroup>
@@ -180,14 +180,13 @@ has been reported.
 <div class="col-md-6 col-md-offset-3 text-center" style="padding-top: 20px;">
 <form id="search-scam-form" class="form-group form-search form-horizontal text-center">
 <div id="search-scam">
-<input type="text" class="no-border search-query" placeholder="1PRugWeVRR7aAuSJJVit2mp2gb4HqCCbMn" id="search-address" maxlength="64">
+<input type="text" class="no-border search-query mb-5" placeholder="1PRugWeVRR7aAuSJJVit2mp2gb4HqCCbMn" id="search-address" maxlength="64">
 <span class="search-icon" ><i class="icon-search"></i></span>
 </div>
 </form>
-<div class="text-center">
-<div style="display: none;" id="search-results">
-<div class="search-results-title"></div>
-<div class="search-results-text"></div>
+<div class="text-center give-space">
+<div style="display:none;" id="search-results">
+
 <div class="clearfix">
 <div class="search-results-info"></div>
 <div class="search-results-sources">Reported by <span></span></div>
@@ -665,34 +664,40 @@ third parties or law enforcement if required.</p>
         });
 
         
-        $("#register-form form").submit(function (event) {
+        $("#report-submit").click(function (event) {
             event.preventDefault();
+            
+            const scam_type = $("#scam-type option:checked").val();
+            const address = $("#payment-addr").val();
+            const description = $("#description").val();
+            // console.log(scam_type, address, description);
 
             if (!validate()) return;
 
-            setButtonWait($("#report-submit"));
-            grecaptcha.reset(reportRecaptchaWidget);
-            grecaptcha.execute(reportRecaptchaWidget);
+            $.ajax({
+                url: 'config/controller.php',
+                method: "post",
+                data: { scam_type, address, description, action:"submit_scam_report"},
+                success: function (data) {
+                    
+                    if (data === "success") {
+                        showModal("Report Successfully Sent", "<p>Your report has been received by Scam Alert and will reviewed by our team as soon as possible.</p><br><p><b>IMPORTANT:</b> If you submitted an <b>INVESTMENT</b> scam, please make sure you have included the website URL in the report. If the scammers helped you buy Bitcoin or Ethereum, please let us know where and how you bought them.</p><br><p>Thank you for helping us make blockchain safer!</p>");
+                        $("#scamReportForm")[0].reset()
+                    } else {
+                        showModal("Error", "Error submitting your scam report. Please try again later.");
+                    }
+                }
+            })
+            
         });
 
         let searchTimeout;
         
-        // $("body").on('keyup', '#search-address', function (e) {
-        //     const code = (e.keyCode || e.which);
-
-        //     if ((code >= 9 && code <= 45 && code !== 32) || (code >= 91 && code <= 93) || (code >= 112 && code <= 145)) {
-        //         return;
-        //     }
-
-        //     window.clearTimeout(searchTimeout);
-        //     hideSearchResult();
-        //     searchTimeout = window.setTimeout(function () {
-        //         search();
-        //     }, 2000);
-        // });
+        
 
         
-        // $('#search-address').on('paste', function () {
+        // $("#search-scam-form").submit(function (event) {
+        //     event.preventDefault();
         //     window.clearTimeout(searchTimeout);
         //     searchTimeout = setTimeout(function () {
         //         search();
@@ -700,53 +705,10 @@ third parties or law enforcement if required.</p>
         // });
 
         
-        $("#search-scam-form").submit(function (event) {
-            event.preventDefault();
-            window.clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(function () {
-                search();
-            }, 100);
-        });
-
-        
-        search();
+        // search();
     });
 
     let liveTransactionsTimeout;
-
-    
-    function getLiveTransactions() {
-        grecaptcha.execute('6LeZ-s4ZAAAAABQepGLGD9euwZsM8mDagU0xePWq', {action: 'live_getter'}).then(function (token) {
-            $.ajax({
-                type: "GET",
-                dataType: "json",
-                url: '/live.json?token=' + token,
-            }).done(function (data) {
-                $("#latesttransactions tbody").html("");
-
-                for (let i = 0; i < data.length; i++) {
-                    $("#latesttransactions tbody").append('<tr class="tabletext"><td class="scam-type">' + data[i].scam_types + '</td><td>Active Since ' + data[i].active_since + '</td><td class="latest-transaction-value">$' + data[i].usd_value + '</td></tr><tr class="tablesubtext"><td colspan="3">' + data[i].last_payment + '</td></tr>')
-                }
-
-            }).fail(function () {
-            }).always(function () {
-                window.clearTimeout(liveTransactionsTimeout);
-                tableReload = window.setTimeout(getLiveTransactions, 60000);
-            });
-        });
-    }
-
-    function onRecaptchaLoad() {
-        reportRecaptchaWidget = grecaptcha.render('report-recaptcha', {
-            'sitekey': '6LdZxfQUAAAAAAFkyx59q0RIO-wSXgps6ouOd2so',
-            'size': "invisible",
-            'callback': submitReport
-        });
-
-        
-        getLiveTransactions();
-    }
-
     
     function validate() {
         let isValid = true;
@@ -779,103 +741,38 @@ third parties or law enforcement if required.</p>
     })
 
     
-    function search() {
-        
-        const query = $("#search-address").val();
-        if (query.length < 4) return
-        var apiKey = "KpEf8AfgCDv5Tylzjr0pMInnKipPQ6pa";
-        let url = `https://api.whale-alert.io/v1/transaction/ethereum/0x0015286d8642f0e0553b7fefa1c168787ae71173cbf82ec2f2a1b2e0ffee72b2?api_key=${apiKey}`
-        
-        
-            $.ajax({
-                type: "GET",
-                dataType: "jsonp",
-                crossDomain: true,
-                url: url,
-            }).done(function (data) {
-                $("#search-results").removeClass();
-                console.log(data);
-
-                if (data.error) {
-                    showSearchResult("Error", data.error)
-                } else if (data.level) {
-                    let warningText = ""
-                    let warningClass = ""
-
-                    switch (data.level) {
-                        case 1:
-                        case 2:
-                        case 3:
-                        case 4:
-                            warningClass = "search-results-trusted"
-                            warningText = "<i class=\"icon-ok\" aria-hidden=\"true\"></i> "
-                            break;
-                        case 5:
-                        case 6:
-                            warningClass = "search-results-suspected"
-                            warningText = "<i class=\"icon-attention\" aria-hidden=\"true\"></i> "
-                            break;
-                        case 7:
-                        case 8:
-                            warningClass = "search-results-confirmed"
-                            warningText = "<i class=\"icon-attention\" aria-hidden=\"true\"></i> "
-                            break;
-                    }
-                    showSearchResult(warningClass, warningText + data.title, data.text, data.info, data.sources)
-                } else if (data.title && data.text) {
-                    
-                    showSearchResult("search-results-trusted", data.title, data.text)
-                } else {
-                    
-                    showSearchResult("", "Error", "Error submitting your query. Please try again.")
-                }
-            }).fail(function () {
-                showSearchResult("", "Error", "Error submitting your query. Please try again.")
-            });
-    }
+    
 
     function makeApiCall() {
-        const query = $("#search-address").val();
+        let query = $("#search-address").val();
         
         $.ajax({
-            url:"api.php",
+            url:"config/controller.php",
             method: "post",
-            data:{action: "CallAPI",q:query},
+            data:{action: "CallAPI", query},
             success: (res) =>{
                 console.log(res);
-                if (res.error) {
-                    showSearchResult("Error", res.error)
-                } else if (res.level) {
-                    let warningText = ""
-                    let warningClass = ""
-
-                    switch (res.level) {
-                        case 1:
-                        case 2:
-                        case 3:
-                        case 4:
-                            warningClass = "search-results-trusted"
-                            warningText = "<i class=\"icon-ok\" aria-hidden=\"true\"></i> "
-                            break;
-                        case 5:
-                        case 6:
-                            warningClass = "search-results-suspected"
-                            warningText = "<i class=\"icon-attention\" aria-hidden=\"true\"></i> "
-                            break;
-                        case 7:
-                        case 8:
-                            warningClass = "search-results-confirmed"
-                            warningText = "<i class=\"icon-attention\" aria-hidden=\"true\"></i> "
-                            break;
-                    }
-                    showSearchResult(warningClass, warningText + res.title, res.text, res.info, res.sources)
-                } else if (res.title && res.text) {
-                    
-                    showSearchResult("search-results-trusted", res.title, res.text)
-                } else {
-                    
-                    showSearchResult("", "Error", "Error submitting your query. Please try again.")
-                }
+                showSearchResult(res)
+                const datas = JSON.parse(res)
+                console.log(datas);
+                query ="";
+                let output = '';
+                $("#search-results").show();
+                datas.forEach(data =>{
+                    output += `
+                    <ul class="list-group">
+    
+                    <li class="list-group-item"><h4>Scam Type: ${data.scam}</h4>
+                    <h6 class="space-1">Address: ${data.address}</h6>
+                    <div class="p-4 text-center">
+                        <span>Description:</span> <p>${data.description}</p>
+                            
+                        </div>
+                    </li>
+                    </ul>
+                    `
+                });
+                document.getElementById("search-results").innerHTML = output;
             }
             
         })
@@ -890,26 +787,28 @@ third parties or law enforcement if required.</p>
         
         $.ajax({
             type: "POST",
-            dataType: "json",
-            data: {type: scam_type, addr: address, desc: description, g_recaptcha_response: recaptchaToken},
-            url: '/submitscam',
-        }).done(function (data) {
-            if (data.error) {
-                showModal("Error", data.error);
-            } else if (data.success) {
-                showModal("Report Successfully Sent", "<p>Your report has been received by Scam Alert and will reviewed by our team as soon as possible.</p><br><p><b>IMPORTANT:</b> If you submitted an <b>INVESTMENT</b> scam, please make sure you have included the website URL in the report. If the scammers helped you buy Bitcoin or Ethereum, please let us know where and how you bought them.</p><br><p>Thank you for helping us make blockchain safer!</p>");
-                
-                $("#scam-type").val('default').selectpicker("refresh");
-                $("#payment-addr").val("");
-                $("#description").val("");
-            } else {
-                showModal("Error", "Error submitting your scam report. Please try again later.");
+            data: $("#scamReportForm").serialize()+ "&action=submit_scam_report",
+            url: 'config/controller.php',
+            success: function (data) {
+            console.log(data);
             }
-        }).fail(function () {
-            showModal("Error", "Error submitting your scam report. Please try again later.");
-        }).always(function () {
-            setButtonGo($("#report-submit"));
-        });
+        })
+            // if (data.error) {
+            //     showModal("Error", data.error);
+            // } else if (data.success) {
+            //     showModal("Report Successfully Sent", "<p>Your report has been received by Scam Alert and will reviewed by our team as soon as possible.</p><br><p><b>IMPORTANT:</b> If you submitted an <b>INVESTMENT</b> scam, please make sure you have included the website URL in the report. If the scammers helped you buy Bitcoin or Ethereum, please let us know where and how you bought them.</p><br><p>Thank you for helping us make blockchain safer!</p>");
+                
+            //     $("#scam-type").val('default').selectpicker("refresh");
+            //     $("#payment-addr").val("");
+            //     $("#description").val("");
+            // } else {
+            //     showModal("Error", "Error submitting your scam report. Please try again later.");
+            // }
+        // }).fail(function () {
+        //     showModal("Error", "Error submitting your scam report. Please try again later.");
+        // }).always(function () {
+        //     setButtonGo($("#report-submit"));
+        // });
     }
 
     
